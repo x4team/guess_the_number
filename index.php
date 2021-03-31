@@ -38,8 +38,8 @@ const main = () => {
     mainDiv.textContent = '';
     
     // Угадываем персонажами числа (Вызываем метод получения числа)
-    <?php $_SESSION['Lila']->guess_method(); ?>
-    <?php $_SESSION['Bender']->guess_method(); ?>
+    <?php $_SESSION['Lila']->guessMethod(); ?>
+    <?php $_SESSION['Bender']->guessMethod(); ?>
 
     // Создаем заголовок h3 с призывом выбрать победителя
     var node = document.createElement("h3");                 
@@ -49,26 +49,26 @@ const main = () => {
     
 
     // Функция создания кнопок для выбора победителя
-    let button_create = (text) => {
+    let buttonCreate = (text) => {
         btn = document.createElement("BUTTON");
         btn.innerHTML = text; 
         btn.className = "btn btn-primary";
         document.getElementById("main_div").appendChild(btn); 
         if (text == "Никто") {
             btn.setAttribute("id","nobody")
-            document.getElementById("nobody").onclick = function() { update_counter("Nobody") };
+            document.getElementById("nobody").onclick = function() { updateCounter("Nobody") };
         } else if (text == "Лила") {
             btn.setAttribute("id","lila")
-            document.getElementById("lila").onclick = function() { update_counter("Lila") };
+            document.getElementById("lila").onclick = function() { updateCounter("Lila") };
         } else if (text == "Бендер") {
             btn.setAttribute("id","bender")
-            document.getElementById("bender").onclick = function() { update_counter("Bender") };
+            document.getElementById("bender").onclick = function() { updateCounter("Bender") };
         }
          
     }
 
     // Функци я создания параграфа
-    let p_create = (text) => {
+    let paragraphCreate = (text) => {
         var para = document.createElement("P");   
         para.innerText = text;
         para.className = "answer";   
@@ -76,15 +76,15 @@ const main = () => {
     }
 
     // ВЫВОДИМ ЗНАЧЕНИЯ И КНОПКИ
-    let lila_answer = p_create(`Лила: <?php echo $_SESSION["Lila"]->num; ?> `);
-    let bender_answer = p_create(`Бендер: <?php echo $_SESSION["Bender"]->num; ?> `);
+    let lilaAnswer = paragraphCreate(`Лила: <?php echo $_SESSION["Lila"]->num; ?> `);
+    let benderAnswer = paragraphCreate(`Бендер: <?php echo $_SESSION["Bender"]->num; ?> `);
 
-    let button_lila = button_create("Лила");
-    let button_nobody = button_create("Никто");
-    let button_bender = button_create("Бендер");
+    let buttonLila = buttonCreate("Лила");
+    let buttonNobody = buttonCreate("Никто");
+    let buttonBender = buttonCreate("Бендер");
 
     // Обновление счетчика
-    const update_counter = (person) => {
+    const updateCounter = (person) => {
         if (person == 'Lila') {
 	// Запрос на изменение данных в сессии через ajax	
 	$.ajax({

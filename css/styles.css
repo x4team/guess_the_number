@@ -5,6 +5,7 @@
 .answer {font-weight: 400; font-size: 1.3em; }
 .orange {color: orange;}
 .blue {color: blue;}
+#main_div {width: 400px;}
 form {margin: auto; padding: 20px; max-width: 400px;  }
 h4 {margin: auto; text-align: center;  padding: 20px;}
 h3 {margin: auto; text-align: center;  padding: 20px;}
