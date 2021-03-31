@@ -1,0 +1,14 @@
+.container{display: inline-flex; justify-content: center; padding-top: 30px;}
+.welcome_text{font-weight: 400; font-size: 1.3em;}
+.btn-primary { margin: 30px; color: white;  border-color: #0084c2;}
+.btn-primary:hover {color: white;  border-color: #0084c2;}
+.answer {font-weight: 400; font-size: 1.3em; }
+.orange {color: orange;}
+.blue {color: blue;}
+form {margin: auto; padding: 20px; max-width: 400px;  }
+h4 {margin: auto; text-align: center;  padding: 20px;}
+h3 {margin: auto; text-align: center;  padding: 20px;}
+body {text-align: center;}
+html {background-color: white;}
+
+                 
