@@ -11,4 +11,12 @@ function formCreate(history_num) {
                       <button type="submit" class="btn btn-primary">Отправить</button>
             </form>`;
     $("#main_div").append(form);
+
+    // Персонажи угадывают числа (Вызываем метод получения числа)
+    $.ajax({
+      type: 'POST',
+      url: "guess_method.php",
+      success: function(data){
+      }
+    });
 };

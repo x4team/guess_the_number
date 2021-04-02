@@ -5,7 +5,8 @@
 .answer {font-weight: 400; font-size: 1.3em; }
 .orange {color: orange;}
 .blue {color: blue;}
-#main_div {width: 400px;}
+#rating {display: inline-flex;}
+#main_div {min-width: 400px;}
 #history {margin: auto; width: 300px;}
 #span_history {font-size: 1em; word-break: break-all;}
 form {margin: auto; padding: 20px; max-width: 400px;  }

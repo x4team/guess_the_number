@@ -35,16 +35,13 @@ include 'post.php';
 </script>
 <body>
 
-<!-- ГЛАВНАЯ ФУНКЦИЯ -->
+<!-- Функция выбора победителя -->
 <script>
 const main = () => {
     // Очищаем диалоговую область main_div
     const mainDiv = document.getElementById("main_div");
     mainDiv.textContent = '';
-    
-    // Угадываем персонажами числа (Вызываем метод получения числа)
-    <?php $_SESSION['Lila']->guessMethod(); ?>
-    <?php $_SESSION['Bender']->guessMethod(); ?>
+
 
     // Создаем заголовок h3 с призывом выбрать победителя
     var node = document.createElement("h3");                 
@@ -73,7 +70,7 @@ const main = () => {
          
     }
 
-    // Функци я создания параграфа
+    // Функция создания параграфа
     let paragraphCreate = (text) => {
         var para = document.createElement("P");   
         para.innerText = text;
@@ -89,7 +86,7 @@ const main = () => {
     let buttonNobody = buttonCreate("Никто");
     let buttonBender = buttonCreate("Бендер");
 
-    // Обновление счетчика
+    // Обновление счетчика угадываний и флага отправки
     const updateCounter = (person) => {
         if (person == 'Lila') {
 	// Запрос на изменение данных в сессии через ajax	
@@ -127,7 +124,7 @@ const main = () => {
 }
 </script>
 
-<!-- ФУНКЦИЯ СОЗДАНИЯ ФОРМЫ -->
+<!-- ФУНКЦИЯ СОЗДАНИЯ ФОРМЫ И ОПРЕДЕЛЕНИЯ РЕЙТИНГА ПОБЕДИТЕЛЯ-->
 <script src="js/modules/formCreate.js">
 </script>
 
@@ -140,6 +137,8 @@ const main = () => {
         </div>
       </div>
         <img src="img/lilla.png">
+        <div id="rating"><p>Рейтинг: </p><span id="span_history"><?php echo $_SESSION['Lila']->guess_rating; ?></span></div>
+        <div id="history_lila"><p>История угадываний: </p><span id="span_history"><?php echo implode(",", $_SESSION['Lila']->numbers_history); ?></span></div>
     </div>
     <div id="main_div">
     <!-- Проверка на существование игры и стартовая генерация основного блока main_div -->
@@ -170,7 +169,6 @@ const main = () => {
         $numbers = implode(",", $_SESSION["User"]->numbers);
         // Проверям есть ли в массиве первый элемент, если да - то продолжаем игру
         if ($_SESSION["User"]->isUserSend) {
-            var_dump($_SESSION["User"]->isUserSend);
             echo "<script>main()</script>";
         } else if ($_SESSION["User"]->numbers && !$_SESSION["User"]->isUserSend) {        
             echo "<script>continueGame(\"{$numbers}\");</script>";
@@ -188,6 +186,8 @@ const main = () => {
             </div>
         </div>
         <img src="img/bender.png">
+        <div id="rating"><p>Рейтинг: </p><span id="span_history"><?php echo $_SESSION['Bender']->guess_rating; ?></span></div>
+        <div id="history_bender"><p>История угадываний: </p><span id="span_history"><?php echo implode(",", $_SESSION['Bender']->numbers_history); ?></span></div>
     </div>
 </div>
 
