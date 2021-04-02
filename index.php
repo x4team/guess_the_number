@@ -1,35 +1,40 @@
 <?php
-// Импорт класса Person для создание персонажей
+// Активация ошибок на странице
+include 'debug.php';
+
+// Импорт класса Person и User для создание персонажей и пользователя
 include 'person.php';
-?>
+include 'user.php';
 
-<?php
-// СТАРТ СЕССИИ И ГЕНЕРАЦИЯ ПЕРСОНАЖЕЙ
-
+// СТАРТ СЕССИИ
 session_start ();
-ini_set ('display_errors', 1);
-ini_set ('display_startup_errors', 1);
-error_reporting (E_ALL);
 
-if (!isset($_SESSION['Bender'])) {
-    $_SESSION["Bender"] = new Person();
-}
-if (!isset($_SESSION['Lila'])) {
-    $_SESSION['Lila'] = new Person();
-}
+// ГЕНЕРАЦИЯ ПЕРСОНАЖЕЙ И ПОЛЬЗОВАТЕЛЯ
+include 'gen_persons.php';
+
+// Импорт POST для формы
+include 'post.php';
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
     <title>Игра - "Загадай число!"</title>
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>	
+    <script src="https://kit.fontawesome.com/35234960be.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.5.1.min.js"></script>	
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
+<script>
+        // Запрещаем повторную отправку данных в ВСЕХ форм при обновлении страницы
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 <body>
+
 <!-- ГЛАВНАЯ ФУНКЦИЯ -->
 <script>
 const main = () => {
@@ -46,6 +51,7 @@ const main = () => {
     var textnode = document.createTextNode("Выбери того, кто угадал твое число");       
     node.appendChild(textnode);                             
     document.getElementById("main_div").appendChild(node);    
+    
     
 
     // Функция создания кнопок для выбора победителя
@@ -98,7 +104,7 @@ const main = () => {
 
         }
         if (person == 'Bender') {
-	$.ajax({
+	    $.ajax({
                 type: 'POST',
                 url: "update_counter_bender.php",
                 success: function(data){
@@ -108,14 +114,21 @@ const main = () => {
         });
         }
         if (person == 'Nobody') {
-            location.reload()
+        $.ajax({
+                type: 'POST',
+                url: "nobody_reload.php",
+                success: function(data){
+                        location.reload();
+                }
+        });
            
-        }
-        
+        } 
     }
-
-
 }
+</script>
+
+<!-- ФУНКЦИЯ СОЗДАНИЯ ФОРМЫ -->
+<script src="js/modules/formCreate.js">
 </script>
 
 <div class="container ">
@@ -129,12 +142,43 @@ const main = () => {
         <img src="img/lilla.png">
     </div>
     <div id="main_div">
-        <h3>Привет!</h3> 
+    <!-- Проверка на существование игры и стартовая генерация основного блока main_div -->
+    <script>
+    let startGame = (numbers) => { 
+      let welcome = `
+      <h3>Привет!</h3> 
         <p class="welcome_text"> Нас зовут Лила и Бендер. </p>
         <p class="welcome_text"> Мы соревнуемся в угадывании чисел.</p> 
         <p class="welcome_text"> Пожалуйста, загадай двухзначное число </p>
         <p class="welcome_text"> и нажми кнопку! </p>
-    <button onclick="main()" type="submit" class="btn btn-primary">Я загадал!</button>
+        <button onclick="formCreate('${numbers}')" type="submit" class="btn btn-primary">Я загадал!</button>
+      `;
+      $("#main_div").append(welcome);
+    };
+    let continueGame = (numbers) => {
+        
+      let game = `
+        <h3>Продолжаем играть!</h3> 
+        <p class="welcome_text"> Загадай двухзначное число </p>
+        <p class="welcome_text"> и нажми кнопку! </p>
+        <button onclick="formCreate('${numbers}')" type="submit" class="btn btn-primary">Я загадал!</button>
+      `;
+        $("#main_div").append(game);
+    };
+    </script>
+    <?php
+        $numbers = implode(",", $_SESSION["User"]->numbers);
+        // Проверям есть ли в массиве первый элемент, если да - то продолжаем игру
+        if ($_SESSION["User"]->isUserSend) {
+            var_dump($_SESSION["User"]->isUserSend);
+            echo "<script>main()</script>";
+        } else if ($_SESSION["User"]->numbers && !$_SESSION["User"]->isUserSend) {        
+            echo "<script>continueGame(\"{$numbers}\");</script>";
+        }
+        else {
+            echo "<script>startGame(\"{$numbers}\")</script>";
+        }
+    ?>
     </div>
     <div class="bender">
         <div>
@@ -149,3 +193,5 @@ const main = () => {
 
 </body>
 </html>
+
+

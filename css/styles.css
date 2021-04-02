@@ -6,6 +6,8 @@
 .orange {color: orange;}
 .blue {color: blue;}
 #main_div {width: 400px;}
+#history {margin: auto; width: 300px;}
+#span_history {font-size: 1em; word-break: break-all;}
 form {margin: auto; padding: 20px; max-width: 400px;  }
 h4 {margin: auto; text-align: center;  padding: 20px;}
 h3 {margin: auto; text-align: center;  padding: 20px;}
