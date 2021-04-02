@@ -12,11 +12,4 @@ function formCreate(history_num) {
             </form>`;
     $("#main_div").append(form);
 
-    // Персонажи угадывают числа (Вызываем метод получения числа)
-    $.ajax({
-      type: 'POST',
-      url: "guess_method.php",
-      success: function(data){
-      }
-    });
 };

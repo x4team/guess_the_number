@@ -6,6 +6,7 @@
 .orange {color: orange;}
 .blue {color: blue;}
 #rating {display: inline-flex;}
+img {height: 500px;}
 #main_div {min-width: 400px;}
 #history {margin: auto; width: 300px;}
 #span_history {font-size: 1em; word-break: break-all;}

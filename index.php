@@ -28,7 +28,7 @@ include 'post.php';
 <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <script>
-        // Запрещаем повторную отправку данных в ВСЕХ форм при обновлении страницы
+        // Запрещаем повторную отправку данных в форму при обновлении страницы
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
@@ -37,7 +37,7 @@ include 'post.php';
 
 <!-- Функция выбора победителя -->
 <script>
-const main = () => {
+const chooseWinner = () => {
     // Очищаем диалоговую область main_div
     const mainDiv = document.getElementById("main_div");
     mainDiv.textContent = '';
@@ -79,56 +79,55 @@ const main = () => {
     }
 
     // ВЫВОДИМ ЗНАЧЕНИЯ И КНОПКИ
-    let lilaAnswer = paragraphCreate(`Лила: <?php echo $_SESSION["Lila"]->num; ?> `);
-    let benderAnswer = paragraphCreate(`Бендер: <?php echo $_SESSION["Bender"]->num; ?> `);
+    paragraphCreate(`Лила: <?php echo $_SESSION["Lila"]->num; ?> `);
+    paragraphCreate(`Бендер: <?php echo $_SESSION["Bender"]->num; ?> `);
 
-    let buttonLila = buttonCreate("Лила");
-    let buttonNobody = buttonCreate("Никто");
-    let buttonBender = buttonCreate("Бендер");
+    buttonCreate("Лила");
+    buttonCreate("Никто");
+    buttonCreate("Бендер");
 
-    // Обновление счетчика угадываний и флага отправки
+    // Обновление счетчика угадываний и состояние(флага) отправки
     const updateCounter = (person) => {
         if (person == 'Lila') {
-	// Запрос на изменение данных в сессии через ajax	
-	$.ajax({
-		type: 'POST',
-		url: "update_counter_lila.php",
-		success: function(data){
-      			document.getElementById("lila_count").innerHTML = <?php echo $_SESSION['Lila']->counter; ?>;
-            		location.reload();
-		}
-   	});
-
+	        // Запрос на изменение данных в сессии через ajax	
+	        $.ajax({
+		        type: 'POST',
+		        url: "update_counter_lila.php",
+		        success: function(data){
+      	        		document.getElementById("lila_count").innerHTML = <?php echo $_SESSION['Lila']->counter; ?>;
+                   		location.reload();
+		     }
+   	     });
         }
         if (person == 'Bender') {
-	    $.ajax({
+	        $.ajax({
                 type: 'POST',
                 url: "update_counter_bender.php",
                 success: function(data){
                         document.getElementById("bender_count").innerHTML = <?php echo $_SESSION['Bender']->counter; ?>;
                         location.reload();
                 }
-        });
+            });
         }
         if (person == 'Nobody') {
-        $.ajax({
+            $.ajax({
                 type: 'POST',
                 url: "nobody_reload.php",
                 success: function(data){
                         location.reload();
                 }
-        });
+            });
            
         } 
     }
 }
 </script>
 
-<!-- ФУНКЦИЯ СОЗДАНИЯ ФОРМЫ И ОПРЕДЕЛЕНИЯ РЕЙТИНГА ПОБЕДИТЕЛЯ-->
-<script src="js/modules/formCreate.js">
-</script>
+<!-- Скрипт с функцией СОЗДАНИЯ ФОРМЫ-->
+<script src="js/modules/formCreate.js"></script>
 
 <div class="container ">
+    <!-- ИЗОБРАЖЕНИЕ ЛИЛЫ И ЕЕ ДАННЫЕ -->
     <div class="lila">
     <div >
         <div >
@@ -136,48 +135,33 @@ const main = () => {
           <h2 id="lila_count"><?php echo $_SESSION['Lila']->counter; ?></h2>
         </div>
       </div>
-        <img src="img/lilla.png">
+        <img id="person" src="img/lilla.png">
         <div id="rating"><p>Рейтинг: </p><span id="span_history"><?php echo $_SESSION['Lila']->guess_rating; ?></span></div>
         <div id="history_lila"><p>История угадываний: </p><span id="span_history"><?php echo implode(",", $_SESSION['Lila']->numbers_history); ?></span></div>
     </div>
+
     <div id="main_div">
-    <!-- Проверка на существование игры и стартовая генерация основного блока main_div -->
-    <script>
-    let startGame = (numbers) => { 
-      let welcome = `
-      <h3>Привет!</h3> 
-        <p class="welcome_text"> Нас зовут Лила и Бендер. </p>
-        <p class="welcome_text"> Мы соревнуемся в угадывании чисел.</p> 
-        <p class="welcome_text"> Пожалуйста, загадай двухзначное число </p>
-        <p class="welcome_text"> и нажми кнопку! </p>
-        <button onclick="formCreate('${numbers}')" type="submit" class="btn btn-primary">Я загадал!</button>
-      `;
-      $("#main_div").append(welcome);
-    };
-    let continueGame = (numbers) => {
-        
-      let game = `
-        <h3>Продолжаем играть!</h3> 
-        <p class="welcome_text"> Загадай двухзначное число </p>
-        <p class="welcome_text"> и нажми кнопку! </p>
-        <button onclick="formCreate('${numbers}')" type="submit" class="btn btn-primary">Я загадал!</button>
-      `;
-        $("#main_div").append(game);
-    };
-    </script>
-    <?php
-        $numbers = implode(",", $_SESSION["User"]->numbers);
-        // Проверям есть ли в массиве первый элемент, если да - то продолжаем игру
-        if ($_SESSION["User"]->isUserSend) {
-            echo "<script>main()</script>";
-        } else if ($_SESSION["User"]->numbers && !$_SESSION["User"]->isUserSend) {        
-            echo "<script>continueGame(\"{$numbers}\");</script>";
-        }
-        else {
-            echo "<script>startGame(\"{$numbers}\")</script>";
-        }
-    ?>
+        <!-- Скрипт с функцией СТАРТА игры-->
+        <script src="js/modules/startGame.js"></script>
+        <!-- Скрипт с функцией ПРОДОЛЖЕНИЯ игры-->
+        <script src="js/modules/continueGame.js"> </script>
+
+        <!-- СТАРТ Диалогового окна в зависимости от сессии (Старт, Продолжение игры, Выбор победителя) -->
+        <?php
+             $numbers = implode(",", $_SESSION["User"]->numbers);
+             // Проверям есть ли в массиве первый элемент, если да - то продолжаем игру
+             if ($_SESSION["User"]->isUserSend) {
+                    echo "<script>chooseWinner()</script>";
+            } else if ($_SESSION["User"]->numbers && !$_SESSION["User"]->isUserSend) {        
+                     echo "<script>continueGame(\"{$numbers}\");</script>";
+            }
+            else {
+                echo "<script>startGame(\"{$numbers}\")</script>";
+             }
+        ?>
     </div>
+
+    <!-- ИЗОБРАЖЕНИЕ БЕНДЕРА И ЕГО ДАННЫЕ -->
     <div class="bender">
         <div>
             <div>
@@ -185,7 +169,7 @@ const main = () => {
                 <h2 id="bender_count"><?php echo $_SESSION['Bender']->counter; ?></h2>
             </div>
         </div>
-        <img src="img/bender.png">
+        <img id="person" src="img/bender.png">
         <div id="rating"><p>Рейтинг: </p><span id="span_history"><?php echo $_SESSION['Bender']->guess_rating; ?></span></div>
         <div id="history_bender"><p>История угадываний: </p><span id="span_history"><?php echo implode(",", $_SESSION['Bender']->numbers_history); ?></span></div>
     </div>

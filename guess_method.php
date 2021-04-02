@@ -1,25 +1,21 @@
 <?php 
-include 'user.php';
-include 'person.php';
-session_start();
 $_SESSION['Lila']->guessMethod();
 $_SESSION['Bender']->guessMethod(); 
 
 // Берем загаданное число пользователя
 $userNumber = $_SESSION['User']->number;
 
-ratingDetermination('Bender', $userNumber);
-ratingDetermination('Lila', $userNumber);
+// Определяем находится ли число в заданном интервале
+function beSide($num,$min,$max){
+    if($num >= $min and $num <= $max){
+       return true;
+    }
+    return false;
+}
+
 
 // Обновляем рейтинг персонажей
 function ratingDetermination($person, $number) {
-    // Определяем находится ли число в заданном интервале
-    function beSide($num,$min,$max){
-        if($num >= $min and $num <= $max){
-           return true;
-        }
-        return false;
-    }
 
     // Определяем интервал угадывания (+-5 едениц)
     $min_int = $number - 5;
@@ -33,7 +29,8 @@ function ratingDetermination($person, $number) {
 
 };
 
-
+ratingDetermination('Bender', $userNumber);
+ratingDetermination('Lila', $userNumber);
 
 
 ?>
