@@ -1,12 +1,9 @@
 <?php
-if (!isset($_SESSION['Bender'])) {
-    $_SESSION["Bender"] = new Person();
-}
-if (!isset($_SESSION['Lila'])) {
-    $_SESSION['Lila'] = new Person();
-}
+// Импортируем хранилище и стартуем сессию
+include 'Storage.php';
+$storage = new Storage();
 
-if (!isset($_SESSION['User'])) {
-    $_SESSION['User'] = new User();
-}
-?>
+// Создаем персонажей и пользователя
+$storage->setStorageId('Lila', new Person());
+$storage->setStorageId('Bender', new Person());
+$storage->setStorageId('User', new User());
