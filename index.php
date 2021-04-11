@@ -32,6 +32,14 @@ include 'POST.php';
 </script>
 
 <body>
+    <!--Функция обновление счетчика угадываний и состояние(флага) отправки updateCounter-->
+    <script src="js/modules/updateCounter.js"></script>
+
+    <!--Функция создания кнопок для выбора победителя buttonCreate-->
+    <script src="js/modules/buttonCreate.js"></script>
+
+    <!--Функция создания параграфа paragraphCreate -->
+    <script src="js/modules/paragraphCreate.js"></script>
 
     <!-- Функция выбора победителя -->
     <script>
@@ -40,90 +48,20 @@ include 'POST.php';
             const mainDiv = document.getElementById("main_div");
             mainDiv.textContent = '';
 
-
             // Создаем заголовок h3 с призывом выбрать победителя
-            var node = document.createElement("h3");
-            var textnode = document.createTextNode("Выбери того, кто угадал твое число");
+            let node = document.createElement("h3");
+            let textnode = document.createTextNode("Выбери того, кто угадал твое число");
             node.appendChild(textnode);
             document.getElementById("main_div").appendChild(node);
 
-
-
-            // Функция создания кнопок для выбора победителя
-            let buttonCreate = (text) => {
-                btn = document.createElement("BUTTON");
-                btn.innerHTML = text;
-                btn.className = "btn btn-primary";
-                document.getElementById("main_div").appendChild(btn);
-                if (text == "Никто") {
-                    btn.setAttribute("id", "nobody")
-                    document.getElementById("nobody").onclick = function() {
-                        updateCounter("Nobody")
-                    };
-                } else if (text == "Лила") {
-                    btn.setAttribute("id", "lila")
-                    document.getElementById("lila").onclick = function() {
-                        updateCounter("Lila")
-                    };
-                } else if (text == "Бендер") {
-                    btn.setAttribute("id", "bender")
-                    document.getElementById("bender").onclick = function() {
-                        updateCounter("Bender")
-                    };
-                }
-
-            }
-
-            // Функция создания параграфа
-            let paragraphCreate = (text) => {
-                var para = document.createElement("P");
-                para.innerText = text;
-                para.className = "answer";
-                document.getElementById("main_div").appendChild(para);
-            }
-
             // ВЫВОДИМ ЗНАЧЕНИЯ И КНОПКИ
-            paragraphCreate(`Лила: <?php echo $storage->getStorageId('Lila')->num; ?> `);
-            paragraphCreate(`Бендер: <?php echo $storage->getStorageId('Bender')->num; ?> `);
+            paragraphCreate(`<?php echo $storage->getStorageId('Lila')->name; ?>: <?php echo $storage->getStorageId('Lila')->num; ?> `);
+            paragraphCreate(`<?php echo $storage->getStorageId('Bender')->name; ?>: <?php echo $storage->getStorageId('Bender')->num; ?> `);
 
-            buttonCreate("Лила");
-            buttonCreate("Никто");
-            buttonCreate("Бендер");
+            buttonCreate(`<?php echo $storage->getStorageId('Lila')->name; ?>`, `<?php echo $storage->getStorageId('Lila')->id; ?>`);
+            buttonCreate(`Никто`);
+            buttonCreate(`<?php echo $storage->getStorageId('Bender')->name; ?>`, `<?php echo $storage->getStorageId('Bender')->id; ?>`);
 
-            // Обновление счетчика угадываний и состояние(флага) отправки
-            const updateCounter = (person) => {
-                if (person == 'Lila') {
-                    // Запрос на изменение данных в сессии через ajax	
-                    $.ajax({
-                        type: 'POST',
-                        url: "update_counter_lila.php",
-                        success: function(data) {
-                            document.getElementById("lila_count").innerHTML = <?php echo $storage->getStorageId('Lila')->counter; ?>;
-                            location.reload();
-                        }
-                    });
-                }
-                if (person == 'Bender') {
-                    $.ajax({
-                        type: 'POST',
-                        url: "update_counter_bender.php",
-                        success: function(data) {
-                            document.getElementById("bender_count").innerHTML = <?php echo $storage->getStorageId('Bender')->counter; ?>;
-                            location.reload();
-                        }
-                    });
-                }
-                if (person == 'Nobody') {
-                    $.ajax({
-                        type: 'POST',
-                        url: "nobody_reload.php",
-                        success: function(data) {
-                            location.reload();
-                        }
-                    });
-
-                }
-            }
         }
     </script>
 

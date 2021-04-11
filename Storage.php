@@ -3,7 +3,7 @@ class Storage
 {
     public function __construct()
     {
-        if (!isset($_SESSION)) {
+        if (session_status() < 2) {
             $this->initStorage();
         }
     }
@@ -13,14 +13,14 @@ class Storage
         session_start();
     }
 
-    public function setStorageId($id, $value)
+    public function setStorageId(string $id = "", $value)
     {
         if (!isset($_SESSION[$id])) {
             $_SESSION[$id] = $value;
         }
     }
 
-    public function getStorageId($Id)
+    public function getStorageId(string $Id)
     {
         return $_SESSION[$Id];
     }

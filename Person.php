@@ -2,6 +2,7 @@
 class Person
 {
     public $name = '';
+    public $id = '';
     public $counter = 0;
     public $num = 0;
     public $numbers_history = [];
