@@ -1,9 +1,9 @@
 let continueGame = (numbers_user, num_one, num_two, num_three) => {
 
   let game = `
-      <h4>Бендер загадывал: ${num_one}</h4> 
-      <h4>Лила загадывала: ${num_two}</h4>
-      <h4>Вы загадывали: ${num_three}</h4>
+      <h4>Бендер: ${num_one}</h4> 
+      <h4>Лила: ${num_two}</h4>
+      <h4>Вы: ${num_three}</h4>
       <h3>Продолжаем играть!</h3> 
       <p class="welcome_text"> Загадай двухзначное число </p>
       <p class="welcome_text"> и нажми кнопку! </p>
