@@ -11,6 +11,7 @@ include 'gen_persons.php';
 
 // Импорт POST для формы
 include 'POST.php';
+
 ?>
 
 <!DOCTYPE html>

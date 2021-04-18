@@ -6,7 +6,7 @@ function formCreate(history_num) {
             <form action="" method="post">
                       <div class="form-group">
                      <label for="nput_number" style="color: grey;">Двухзначное число </label>
-                     <input type="text" class="form-control" id="InputNumber1" placeholder="00" name="input_number" required pattern="[0-9]{2}">
+                     <input type="text" class="form-control" id="InputNumber1" placeholder="00" name="input_number" >
                       </div>
                     <div id="history"><p>История ваших чисел: </p><span id="span_history">${history_num}</span></div>
                       <button type="submit" class="btn btn-primary">Отправить</button>
@@ -14,3 +14,5 @@ function formCreate(history_num) {
   $("#main_div").append(form);
 
 };
+
+//required pattern="[0-9]{2}"
