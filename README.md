@@ -28,23 +28,3 @@
        ~   ~ '        ~   >          :
      :   :   !  >  .~     >          '
     /   /     ^~~"           .        ~
-   ~   '                  `   \        !
- :     `                    ~-~"        `
-        \                     > '(       '
-!  ..:)./':                  ~   ':       ~
->.!!!!!!X   :              :       \~      >
-\!!T!!!!!!                :       /
-!?X$B!!!!!L ~                    ~        ~
-?!!$$$X!!!X/             >     :        :
- `!!$$$!X 'N       f    ^-.   ~       .~
-  '!!!!f` 'MMRn.    .-^"   ``       :`
-    ~!X> ?RMMMMMMMR> .e*~        >`
-      >`.XMMMMMMMMMMM~ ..    :~
-      ds@MMMMMMMMMMMMNRMMMM5`
-      RMMMMMMMMMMMMMMMMMMMMML
-     'MMMMMMMMMMMMMMMMMMMMMMM
-     9MMMMMMNMMMMMMMMMMMMMMMMK
-     MMMMMMMMR8MMMMMMMMMMMMMMM
-     RMMMMMMMMM$MMMMMMMMMMMMMMk
-    'MMMMMMMMMMM$MMMMMMMMMMMMMM
-    'MMMMMMMMMMMMMMMMMMMMMMMMMM
