@@ -1,5 +1,9 @@
 ## Игра - "Загадай число"
 
+https://rakov.xyz/test/winner/
+
+https://rakov.xyz/test/main/
+
                   '#%n. 
             ..++!%+:/X!!?:              .....
               "X!!!!!!!!!!?:       .+?!!!!!!!!!?h.
